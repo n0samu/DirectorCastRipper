@@ -60,6 +60,8 @@ on exportFlash flashMember, basePath
 end
 
 on exportShockwave3d shockwave3dMember, basePath
+  -- If we don't make sure the model is loaded, we might get a blank file!
+  preLoadMember(shockwave3dMember)
   savew3d(shockwave3dMember, basePath & ".w3d")
   return 0
 end
@@ -549,13 +551,6 @@ on initExport
   setTasks(the count of movieFiles + the count of castFiles)
   createLogFile()
   if exportOptions.getaProp(#dismissDialogs) then runAutoclicker()
-end
-
-on nextInternalCast num
-  repeat with i = (num + 1) to the number of castLibs
-    if isInternalCast(castLib i) then return i
-  end repeat
-  return 0
 end
 
 -- Avoid processing the same external castLib multiple times
