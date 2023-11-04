@@ -2,3 +2,5 @@ Tools/
 Xtras/
 Exports/
 *.exe
+*.ini
+*.lnk

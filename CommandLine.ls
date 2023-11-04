@@ -84,6 +84,7 @@ on processCommandLineArgs args
     case optName of
       "help", "h": printInfo(True)
       "version", "v": printInfo(False)
+      "debug": set the debugPlaybackEnabled = True
       -- File paths can be passed without an option name
       "files", EMPTY: processSelection(optVal)
       "folders": set inputFolders = optVal
@@ -103,7 +104,7 @@ on processCommandLineArgs args
   if listP(inputFolders) then
     repeat with folderPath in inputFolders
       if fxObj.fx_FolderExists(folderPath) then
-        processSelection(getDirFiles(folderPath))
+        processSelection(getDirFilesInFolder(folderPath))
       else
         errorMsg("The specified input folder does not exist:" && folderPath)
       end if

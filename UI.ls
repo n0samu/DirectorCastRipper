@@ -1,11 +1,14 @@
 global nextBtn, backBtn
 
 on initUI
+  global dropXtra
   set nextBtn = sprite "NextButton"
   set backBtn = sprite "BackButton"
   repeat with btn in [nextBtn, backBtn]
     if the visible of btn then btn.setStyle("fontSize", 18)
   end repeat
+  set dropXtra = xtra("DropXtra").new(#itemsDropped)
+  dropXtra.dropStart()
   -- Setting Flash sprite properties does not work until after the first stage update
   updateStage()
   initScreen()
@@ -226,6 +229,16 @@ end
 on chooseFolder
   set folderPath = folderSelect()
   if folderPath <> EMPTY then set the text of sprite "FolderPathBox" to folderPath
+end
+
+on itemsDropped items
+  case the frameLabel of
+    "Choose Files":
+      addFiles(getDirFiles(items.getaProp(#Files)))
+    "Options":
+      set the text of sprite "FolderPathBox" to items.getaProp(#Folders).getAt(1)
+  end case
+  updateScreen()
 end
 
 on updateProgressBar

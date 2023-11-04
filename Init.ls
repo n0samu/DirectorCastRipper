@@ -29,7 +29,6 @@ end
 on prepareMovie
   global pathSep, fileioObj, fxObj
   clearGlobals()
-  -- set the debugPlaybackEnabled = 1
   set the idleLoadMode = 0
   set the title of the window = line 1 of the movieAboutInfo
   set pathSep = "\"

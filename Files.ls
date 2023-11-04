@@ -167,10 +167,14 @@ on filterFiles fileList, exts
   return ret
 end
 
-on getDirFiles folderPath
+on getDirFiles files
   set dirExts = ["dir", "dxr", "dcr", "cst", "cxt", "cct"]
+  return filterFiles(files, dirExts)
+end
+
+on getDirFilesInFolder folderPath
   set folderPath = ensureTrailingSlash(folderPath)
-  set dirFiles = filterFiles(fxObj.fx_folderToList(folderPath), dirExts)
+  set dirFiles = getDirFiles(fxObj.fx_folderToList(folderPath))
   set dirFilePaths = list()
   repeat with fName in dirFiles
     dirFilePaths.append(folderPath & fName)

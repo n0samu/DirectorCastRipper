@@ -55,6 +55,9 @@ on exportFlash flashMember, basePath
   repeat with i = 1 to 5
     set ok = exportSWF(flashMember, basePath & ".swf")
     if ok then exit repeat
+    else if the debugPlaybackEnabled then
+      warnMsg("Failed to export" && getMemberIdString(flashMember) & ". Retrying...")
+    end if
   end repeat
   return not ok
 end
