@@ -7,10 +7,7 @@ on initConsole
   if cxObj.consoleExists() then
     if cxObj.consoleAttach() then
       cxObj.stdOut(CRLF)
-      if the count of getCommandLineArgs() > 0 then
-        close the window
-        set consoleMode = True
-      end if
+      if the count of getCommandLineArgs() > 0 then set consoleMode = True
     end if
   end if
 end

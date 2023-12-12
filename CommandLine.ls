@@ -85,6 +85,8 @@ on processCommandLineArgs args
       "help", "h": printInfo(True)
       "version", "v": printInfo(False)
       "debug": set the debugPlaybackEnabled = True
+      "cli": set consoleMode = True
+      "no-cli": set consoleMode = False
       -- File paths can be passed without an option name
       "files", EMPTY: processSelection(optVal)
       "folders": set inputFolders = optVal
@@ -121,7 +123,9 @@ on processCommandLineArgs args
     appendItems(castFiles, casts)
   end if
   
-  if consoleMode then -- User won't be able to set these options via the UI; fail immediately
+  if consoleMode then
+    close the window
+    -- User won't be able to set these options via the UI; fail immediately
     if the count of movieFiles = 0 and the count of castFiles = 0 then
       errorMsg("Please specify at least one Director movie or cast file to export from")
     end if
