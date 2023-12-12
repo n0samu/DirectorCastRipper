@@ -7,8 +7,11 @@ on initUI
   repeat with btn in [nextBtn, backBtn]
     if the visible of btn then btn.setStyle("fontSize", 18)
   end repeat
-  set dropXtra = xtra("DropXtra").new(#itemsDropped)
-  dropXtra.dropStart()
+  -- DropXtra does not work in authoring
+  if voidP(dropXtra) and the runMode = "Projector" then
+    set dropXtra = xtra("DropXtra").new(#itemsDropped)
+    dropXtra.dropStart()
+  end if
   -- Setting Flash sprite properties does not work until after the first stage update
   updateStage()
   initScreen()
@@ -63,9 +66,9 @@ on updateFileChooserScreen
   set removeAllBtn = sprite "RemoveAllButton"
   
   -- Very ugly hack to check from Lingo whether a Flash variable is undefined
-  set the enabled of removeBtn = not(voidP(listObj["selectedIndices"]))
+  set the enabled of removeBtn = not voidP(listObj["selectedIndices"])
   
-  set notEmpty = listObj.length > 0
+  set notEmpty = the length of listObj > 0
   set the enabled of removeAllBtn = notEmpty
   set the enabled of nextBtn = notEmpty
   if notEmpty then setSelectedFiles(the data of listObj)

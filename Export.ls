@@ -56,7 +56,7 @@ on exportFlash flashMember, basePath
     set ok = exportSWF(flashMember, basePath & ".swf")
     if ok then exit repeat
     else if the debugPlaybackEnabled then
-      warnMsg("Failed to export" && getMemberIdString(flashMember) & ". Retrying...")
+      warnMsg(getMemberErrString(flashMember) & ". Retrying...")
     end if
   end repeat
   return not ok
@@ -120,7 +120,9 @@ end
 on getMemberErrString memberRef, errorCode, isCastMemberScript
   set idString = getMemberIdString(memberRef, isCastMemberScript)
   set fName = Files.getFilename(the fileName of castLib (the castLibNum of memberRef))
-  return "Failed to export" && idString && "from" && fName & ":" && "Error code" && errorCode
+  set errString = "Failed to export" && idString && "from" && fName
+  if integerP(errorCode) then put ":" && "Error code" && errorCode after errString
+  return errString
 end
 
 on canExport memberRef
