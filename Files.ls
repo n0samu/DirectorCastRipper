@@ -73,9 +73,9 @@ on isValidDirFile filePath
       
       case fType of
         -- Handle big endian and little endian files
-        "MV93", "FGDM", "FGDC":
+        "MV93", "FGDM", "MC95", "FGDC":
           set isValid = (fourCC = "RIFX")
-        "39VM", "MDGF", "CDGF":
+        "39VM", "MDGF", "59CM", "CDGF":
           set isValid = (fourCC = "XFIR")
       end case
     end if
