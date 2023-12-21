@@ -449,19 +449,13 @@ on movieFilePath
   return the moviePath & the movieName
 end
 
-on canLoad dirFile
-  -- preLoadMovie returns 0 if the file is successfully loaded
-  -- This also works for cast files in Director 11 and below, but sadly not 11.5 or 12
-  return preLoadMovie(dirFile) = 0 and unLoadMovie(dirFile) = 0
-end
-
 on linkMovie movieFilePath
   set linkedMember = member "Linked"
   set linkedMovieSprite = sprite "Linked"
   set errMsg = "The specified movie file could not be loaded:" && Files.getFilename(movieFilePath)
   set the visible of linkedMovieSprite to False
   
-  if not canLoad(movieFilePath) then
+  if not Files.isValidDirFile(movieFilePath) then
     Logging.errorMsg(errMsg)
     return VOID
   end if
@@ -470,8 +464,7 @@ on linkMovie movieFilePath
     set the sound of linkedMember to False
     set the scriptsEnabled of linkedMember to False
     set the fileName of linkedMember = movieFilePath
-    set isValid = preLoadMember(linkedMember)
-    if not isValid then
+    if not the loaded of linkedMember then
       Logging.errorMsg(errMsg)
       return VOID
     end if
@@ -481,11 +474,7 @@ end
 
 on linkCast castFilePath
   set linkedCast = castLib "Linked"
-  -- Since preLoadMovie doesn't work anymore in Dir11.5+, check the file header instead
-  -- This isn't as reliable but it's better than nothing
-  if Utils.directorVersion() < 11.5 then set isValid = canLoad(castFilePath)
-  else set isValid = Files.isValidDirFile(castFilePath)
-  if not isValid then
+  if not Files.isValidDirFile(castFilePath) then
     set msg = "The specified cast file could not be loaded:" && Files.getFilename(castFilePath)
     Logging.errorMsg(msg)
     return VOID
