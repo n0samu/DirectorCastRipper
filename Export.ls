@@ -135,7 +135,7 @@ on canExport memberRef
       return the channelCount of memberRef > 0
     #flash, #vectorshape, #shockwave3d:
       return True -- haven't seen these break yet...
-    #text, #field:
+    #text, #richText, #field:
       return the text of memberRef <> EMPTY
     otherwise: return False
   end case
@@ -159,7 +159,7 @@ on exportMember memberRef, toFolder, formats, options
         exportFlash(memberRef, basePath)
       #shockwave3d:
         exportShockwave3d(memberRef, basePath)
-      #text:
+      #text, #richText:
         exportText(memberRef, basePath, formats, options.getaProp(#textToImages))
       #field:
         exportField(memberRef, basePath, formats, options.getaProp(#textToImages))
