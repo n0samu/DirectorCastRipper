@@ -159,9 +159,9 @@ on exportMember memberRef, toFolder, formats, options
         exportFlash(memberRef, basePath)
       #shockwave3d:
         exportShockwave3d(memberRef, basePath)
-      #text, #richText:
+      #text:
         exportText(memberRef, basePath, formats, options.getaProp(#textToImages))
-      #field:
+      #field, #richText:
         exportField(memberRef, basePath, formats, options.getaProp(#textToImages))
     end case
     if the result <> 0 then warnMsg(getMemberErrString(memberRef, the result))
