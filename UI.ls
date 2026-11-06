@@ -239,7 +239,10 @@ on itemsDropped items
     "Choose Files":
       addFiles(getDirFiles(items.getaProp(#Files)))
     "Options":
-      set the text of sprite "FolderPathBox" to items.getaProp(#Folders).getAt(1)
+      set folders = items.getaProp(#Folders)
+      if the count of folders > 0 then 
+        set the text of sprite "FolderPathBox" to folders.getAt(1)
+      end if
   end case
   updateScreen()
 end
